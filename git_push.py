@@ -37,16 +37,20 @@ else:
         "branch": git_branch.strip()
     }
 
-report_file = "report.json"
-
-if os.path.exists(report_file) and os.path.getsize(report_file) > 0:
-    with open(report_file, "r") as json_file:
-        data = json.load(json_file)
-else:
+    # Always initialize data as an empty list
     data = []
-data.append(entry)
-with open(report_file, "w") as json_file:
-    json.dump(data, json_file, indent=4)
+
+    report_file = "report.json"
+
+    if os.path.exists(report_file) and os.path.getsize(report_file) > 0:
+        with open(report_file, "r") as json_file:
+            data = json.load(json_file)
+
+    data.append(entry)
+
+    with open(report_file, "w") as json_file:
+        json.dump(data, json_file, indent=4)
+
     report_csv_file = "report.csv"
     with open(report_csv_file, "a", newline="") as csv_file:
         csv_writer = csv.DictWriter(csv_file, fieldnames=["name", "commit", "date", "commitId", "origin", "branch"])
