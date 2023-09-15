@@ -53,8 +53,6 @@ async function main() {
     branch: gitBranch.trim(),
   };
 
-  console.log(entry)
-
   let data = [];
 
   const reportFile = 'report.json';
