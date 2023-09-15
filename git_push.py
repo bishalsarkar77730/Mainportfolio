@@ -20,7 +20,7 @@ output, return_code = run_command(git_push)
 if return_code != 0:
     print("Git push failed. Aborting.")
 else:
-    git_username = input("Enter your Git username: ")
+    git_username = input("Enter your Name: ")
     current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     commit_id, _ = run_command("git rev-parse HEAD")
 
