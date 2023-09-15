@@ -39,7 +39,15 @@ async function main() {
   const currentDatetime = new Date();
   const currentDate = currentDatetime.toISOString().split('T')[0];
   const currentTime = currentDatetime.toLocaleTimeString();
-  const { stdout: commitId } = await runCommand('git rev-parse HEAD');
+  let commitId = '';
+
+  try {
+    const { stdout: gitCommitId } = await runCommand('git rev-parse HEAD');
+    commitId = gitCommitId.trim();
+  } catch (error) {
+    console.error('Failed to retrieve commitId:', error);
+  }
+
   const { stdout: gitOrigin } = await runCommand('git config --get remote.origin.url');
   const { stdout: gitBranch } = await runCommand('git branch --show-current');
 
@@ -48,7 +56,7 @@ async function main() {
     commit: commitMessage,
     date: currentDate,
     time: currentTime,
-    commitId: commitId.trim(),
+    commitId: commitId,
     origin: gitOrigin.trim(),
     branch: gitBranch.trim(),
   };
