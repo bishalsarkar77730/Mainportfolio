@@ -40,9 +40,8 @@ async function main() {
   const currentDate = currentDatetime.toISOString().split('T')[0];
   const currentTime = currentDatetime.toLocaleTimeString();
   const commitId = await runCommand('git rev-parse HEAD');
-
-  const { stdout: gitOrigin } = await runCommand('git config --get remote.origin.url');
-  const { stdout: gitBranch } = await runCommand('git branch --show-current');
+  const gitOrigin = await runCommand('git remote get-url origin');
+  const gitBranch = await runCommand('git symbolic-ref --short HEAD');
 
   const entry = {
     name: gitUsername,
@@ -50,11 +49,12 @@ async function main() {
     date: currentDate,
     time: currentTime,
     commitId: commitId,
-    origin: gitOrigin?.trim(),
-    branch: gitBranch?.trim(),
+    origin: gitOrigin.trim(),
+    branch: gitBranch.trim(),
   };
 
   console.log(entry)
+
   let data = [];
 
   const reportFile = 'report.json';
