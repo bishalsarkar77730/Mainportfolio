@@ -38,16 +38,20 @@ else:
     }
 
     # Update report.json
-    report_file = "report.json"
-    if os.path.exists(report_file):
-        with open(report_file, "r") as json_file:
-            data = json.load(json_file)
-        data.append(entry)
-    else:
-        data = [entry]
+report_file = "report.json"
 
-    with open(report_file, "w") as json_file:
-        json.dump(data, json_file, indent=4)
+if os.path.exists(report_file) and os.path.getsize(report_file) > 0:
+    with open(report_file, "r") as json_file:
+        data = json.load(json_file)
+else:
+    data = []
+
+# Add the new entry to the data list
+data.append(entry)
+
+# Save the updated data back to report.json
+with open(report_file, "w") as json_file:
+    json.dump(data, json_file, indent=4)
 
     # Update report.csv
     report_csv_file = "report.csv"
