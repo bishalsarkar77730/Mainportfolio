@@ -52,10 +52,17 @@ else:
         json.dump(data, json_file, indent=4)
 
     report_csv_file = "report.csv"
-    with open(report_csv_file, "a", newline="") as csv_file:
-        csv_writer = csv.DictWriter(csv_file, fieldnames=["name", "commit", "date", "commitId", "origin", "branch"])
-        if not os.path.exists(report_csv_file):
+
+    # Add header row with labels
+    header = ["name", "commit", "date", "commitId", "origin", "branch"]
+
+    if not os.path.exists(report_csv_file) or os.path.getsize(report_csv_file) == 0:
+        with open(report_csv_file, "w", newline="") as csv_file:
+            csv_writer = csv.DictWriter(csv_file, fieldnames=header)
             csv_writer.writeheader()
+
+    with open(report_csv_file, "a", newline="") as csv_file:
+        csv_writer = csv.DictWriter(csv_file, fieldnames=header)
         csv_writer.writerow(entry)
 
     print("Code pushed successfully and report updated.")
