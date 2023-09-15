@@ -43,7 +43,7 @@ async function main() {
 
   try {
     const { stdout: gitCommitId } = await runCommand('git rev-parse HEAD');
-    commitId = gitCommitId.trim();
+    commitId = gitCommitId?.trim();
   } catch (error) {
     console.error('Failed to retrieve commitId:', error);
   }
@@ -57,8 +57,8 @@ async function main() {
     date: currentDate,
     time: currentTime,
     commitId: commitId,
-    origin: gitOrigin.trim(),
-    branch: gitBranch.trim(),
+    origin: gitOrigin?.trim(),
+    branch: gitBranch?.trim(),
   };
 
   let data = [];
