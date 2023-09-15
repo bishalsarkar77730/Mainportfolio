@@ -21,7 +21,9 @@ if return_code != 0:
     print("Git push failed. Aborting.")
 else:
     git_username = input("Enter your Name: ")
-    current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    current_datetime = datetime.now()
+    current_date = current_datetime.strftime("%Y-%m-%d")
+    current_time = current_datetime.strftime("%H:%M:%S")
     commit_id, _ = run_command("git rev-parse HEAD")
 
     # Additional fields
@@ -32,6 +34,7 @@ else:
         "name": git_username,
         "commit": commit_message,
         "date": current_date,
+        "time": current_time,
         "commitId": commit_id.strip(),
         "origin": git_origin.strip(),
         "branch": git_branch.strip()
@@ -54,7 +57,7 @@ else:
     report_csv_file = "report.csv"
 
     # Add header row with labels
-    header = ["name", "commit", "date", "commitId", "origin", "branch"]
+    header = ["name", "commit", "date", "time", "commitId", "origin", "branch"]
 
     if not os.path.exists(report_csv_file) or os.path.getsize(report_csv_file) == 0:
         with open(report_csv_file, "w", newline="") as csv_file:
