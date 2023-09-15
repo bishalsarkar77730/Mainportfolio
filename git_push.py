@@ -25,8 +25,6 @@ else:
     current_date = current_datetime.strftime("%Y-%m-%d")
     current_time = current_datetime.strftime("%H:%M:%S")
     commit_id, _ = run_command("git rev-parse HEAD")
-
-    # Additional fields
     git_origin, _ = run_command("git config --get remote.origin.url")
     git_branch, _ = run_command("git branch --show-current")
 
@@ -40,7 +38,6 @@ else:
         "branch": git_branch.strip()
     }
 
-    # Always initialize data as an empty list
     data = []
 
     report_file = "report.json"
@@ -56,7 +53,6 @@ else:
 
     report_csv_file = "report.csv"
 
-    # Add header row with labels
     header = ["name", "commit", "date", "time", "commitId", "origin", "branch"]
 
     if not os.path.exists(report_csv_file) or os.path.getsize(report_csv_file) == 0:
