@@ -4,9 +4,12 @@ import csv
 import subprocess
 from datetime import datetime
 
+
 def run_command(command):
-    result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+    result = subprocess.run(command, shell=True, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, universal_newlines=True)
     return result.stdout, result.returncode
+
 
 git_add = "git add ."
 commit_message = input("Enter your commit message: ")
