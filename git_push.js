@@ -10,7 +10,7 @@ const rl = readline.createInterface({
 async function runCommand(command) {
   try {
     const { stdout, stderr } = await exec(command);
-    return stdout;
+    return stdout?.trim();
   } catch (error) {
     console.error(`Error executing command: ${command}`);
     console.error(error.stderr || error.message);
@@ -39,14 +39,7 @@ async function main() {
   const currentDatetime = new Date();
   const currentDate = currentDatetime.toISOString().split('T')[0];
   const currentTime = currentDatetime.toLocaleTimeString();
-  let commitId = '';
-
-  try {
-    const { stdout: gitCommitId } = await runCommand('git rev-parse HEAD');
-    commitId = gitCommitId?.trim();
-  } catch (error) {
-    console.error('Failed to retrieve commitId:', error);
-  }
+  const commitId = await runCommand('git rev-parse --short HEAD'); // Use --short to get a short commit ID
 
   const { stdout: gitOrigin } = await runCommand('git config --get remote.origin.url');
   const { stdout: gitBranch } = await runCommand('git branch --show-current');
