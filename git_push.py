@@ -23,6 +23,8 @@ output, return_code = run_command(git_push)
 if return_code != 0:
     print("Git push failed. Aborting.")
 else:
+    project_name = input(
+        "Enter Project Name & specify it (Frontend/backend): ")
     git_username = input("Enter your Name: ")
     current_datetime = datetime.now()
     current_date = current_datetime.strftime("%Y-%m-%d")
@@ -32,6 +34,7 @@ else:
     git_branch, _ = run_command("git branch --show-current")
 
     entry = {
+        "project": project_name,
         "name": git_username,
         "commit": commit_message,
         "date": current_date,
@@ -56,7 +59,8 @@ else:
 
     report_csv_file = "report.csv"
 
-    header = ["name", "commit", "date", "time", "commitId", "origin", "branch"]
+    header = ["project", "name", "commit", "date",
+              "time", "commitId", "origin", "branch"]
 
     if not os.path.exists(report_csv_file) or os.path.getsize(report_csv_file) == 0:
         with open(report_csv_file, "w", newline="") as csv_file:
